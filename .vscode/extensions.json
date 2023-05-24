@@ -1,6 +1,8 @@
 {
   "recommendations": [
-      "mgmcdermott.vscode-language-babel",
+      "sldobri.darcula-5-stars",
+      // "xr0master.webstorm-intellij-darcula-theme",
+      // "mgmcdermott.vscode-language-babel",
       "aaron-bond.better-comments",
       "casperstorm.directory-files",
       "mikestead.dotenv",
@@ -14,7 +16,6 @@
       "cipchk.cssrem",
       "Tyriar.sort-lines",
       "MisterJ.vue-volar-extention-pack",
-      "xr0master.webstorm-intellij-darcula-theme",
       "infeng.vscode-react-typescript",
       "dsznajder.es7-react-js-snippets",
       "planbcoding.vscode-react-refactor"

@@ -2,11 +2,10 @@
 .local
 .output.js
 /node_modules/**
-​
+
 **/*.svg
 **/*.sh
-​
+
 /public/*
 /lib/**
-​
-.eslintrc.cjs
+
