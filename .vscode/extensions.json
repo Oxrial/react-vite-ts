@@ -1,23 +1,24 @@
 {
-  "recommendations": [
-      "sldobri.darcula-5-stars",
-      // "xr0master.webstorm-intellij-darcula-theme",
-      // "mgmcdermott.vscode-language-babel",
-      "aaron-bond.better-comments",
-      "casperstorm.directory-files",
-      "mikestead.dotenv",
-      "EditorConfig.EditorConfig",
-      "usernamehw.errorlens",
-      "VisualStudioExptTeam.vscodeintellicode",
-      "xabikos.JavaScriptSnippets",
-      "isudox.vscode-jetbrains-keybindings",
-      "PKief.material-icon-theme",
-      "christian-kohler.npm-intellisense",
-      "cipchk.cssrem",
-      "Tyriar.sort-lines",
-      "MisterJ.vue-volar-extention-pack",
-      "infeng.vscode-react-typescript",
-      "dsznajder.es7-react-js-snippets",
-      "planbcoding.vscode-react-refactor"
-  ]
+    "recommendations": [
+        "sldobri.darcula-5-stars",
+        "kamikillerto.vscode-colorize",
+        // "xr0master.webstorm-intellij-darcula-theme",
+        // "mgmcdermott.vscode-language-babel",
+        "aaron-bond.better-comments",
+        "casperstorm.directory-files",
+        "mikestead.dotenv",
+        "EditorConfig.EditorConfig",
+        "usernamehw.errorlens",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "xabikos.JavaScriptSnippets",
+        "isudox.vscode-jetbrains-keybindings",
+        "PKief.material-icon-theme",
+        "christian-kohler.npm-intellisense",
+        "cipchk.cssrem",
+        "Tyriar.sort-lines",
+        "MisterJ.vue-volar-extention-pack",
+        "infeng.vscode-react-typescript",
+        "dsznajder.es7-react-js-snippets",
+        "planbcoding.vscode-react-refactor"
+    ]
 }

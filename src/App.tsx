@@ -1,11 +1,8 @@
-import { Route, Routes } from 'react-router-dom'
-import Hellow from './views/hellow'
+import { syncRoute, syncRouter } from '@/router'
+import { useRoutes } from 'react-router-dom'
+
 function App() {
-    return (
-        <Routes>
-            <Route path="/hello" element={<Hellow outcount={1}></Hellow>} />
-        </Routes>
-    )
+    return useRoutes(syncRouter(syncRoute))
 }
 
 export default App
