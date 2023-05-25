@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { ConfigProvider, Button } from 'antd'
-export default function home() {
+export default function HomeIndex() {
+    const [show, changeShow] = useState(false)
     return (
         <Card style={{ margin: 10 }}>
             <ConfigProvider
@@ -9,7 +11,10 @@ export default function home() {
                     }
                 }}
             >
-                <Button type="primary">ANTD</Button>
+                {show + ''}
+                <Button type="primary" onClick={() => changeShow(!show)}>
+                    ANTD
+                </Button>
             </ConfigProvider>
         </Card>
     )

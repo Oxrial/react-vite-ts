@@ -1,5 +1,25 @@
+import { ReactNode, Key } from 'react'
+import type { MenuProps } from 'antd'
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
-function MenuIndex() {
+import { routes } from '@/router'
+import { RoutesItemType } from '@/types/router'
+type MenuItem = Required<MenuProps>['items'][number]
+
+function getItem(label: ReactNode, key: Key, icon?: ReactNode, children?: MenuItem[], type?: 'group'): MenuItem {
+    return {
+        key,
+        icon,
+        children,
+        label,
+        type
+    } as MenuItem
+}
+export default function MenuIndex() {
+    console.log(routes)
+    const items: MenuItem[] = []
+    routes.forEach((route: RoutesItemType) => {
+        items.push(getItem(route?.meta?.title, route!.path))
+    })
     return (
         <Menu
             theme="dark"
@@ -25,5 +45,3 @@ function MenuIndex() {
         />
     )
 }
-
-export default MenuIndex

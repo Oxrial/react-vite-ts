@@ -3,7 +3,7 @@ module.exports = {
     extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react-hooks/recommended', 'plugin:prettier/recommended'],
     parser: '@typescript-eslint/parser',
     parserOptions: { ecmaVersion: 'latest', sourceType: 'module', parser: '@typescript-eslint/parser' },
-    plugins: ['react-refresh', '@typescript-eslint', 'prettier'],
+    plugins: ['react-refresh', 'react-hooks', '@typescript-eslint', 'prettier'],
     rules: {
         'react-refresh/only-export-components': 'warn',
         '@typescript-eslint/no-explicit-any': 'off',
@@ -27,6 +27,10 @@ module.exports = {
                 varsIgnorePattern: '^_'
             }
         ],
+        // 检查hook规则
+        'react-hooks/rules-of-hooks': 'error',
+        // 检查effect依赖
+        'react-hooks/exhaustive-deps': 'warn',
         'prettier/prettier': [
             'warn',
             {
