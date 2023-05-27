@@ -1,115 +1,50 @@
-import { lazy, Suspense } from 'react'
-import { RouteObject } from 'react-router-dom'
+import { lazy, Suspense, ReactNode } from 'react'
+import { Navigate } from 'react-router-dom'
 
-import { OnRouteBeforeType, RoutesItemType } from '@/types/router'
+import AppLayout from '@/layout'
+import { RouteItem } from '@/types/routes'
 
-export interface SyncRoute {
-    path: string
-    element: React.LazyExoticComponent<any>
-    children?: Array<SyncRoute>
-    meta?: {
-        title?: string
-        needLogin?: boolean
-    }
+// eslint-disable-next-line react-refresh/only-export-components
+const Home = lazy(() => import('@/views/home'))
+// eslint-disable-next-line react-refresh/only-export-components
+const Hellow1 = lazy(() => import('@/views/hellow'))
+// eslint-disable-next-line react-refresh/only-export-components
+const Hellow2 = lazy(() => import('@/views/hellow2'))
+const lazyLoad = (element: ReactNode): ReactNode => {
+    return <Suspense fallback={<Spin />}>{element}</Suspense>
 }
-
-export const syncRoute: SyncRoute[] = [
+export const routesObject = [
     {
         path: '/',
-        element: lazy(() => import('@/layout')),
+        element: <AppLayout />,
         children: [
             {
                 path: '',
-                element: lazy(() => import('@/views/home'))
+                element: <Navigate to="/home" />,
+                meta: { hidden: true }
             },
             {
+                path: 'home',
+                element: lazyLoad(<Home />),
+                meta: { title: '首页' }
+            }
+        ]
+    },
+    {
+        path: '/hellow',
+        element: <AppLayout />,
+        meta: { title: 'HELLOW' },
+        children: [
+            {
                 path: 'hellow',
-                element: lazy(() => import('@/views/hellow'))
+                element: lazyLoad(<Hellow1 outcount={1} />),
+                meta: { title: 'HELLOW1' }
+            },
+            {
+                path: 'hellow2',
+                element: lazyLoad(<Hellow2 />),
+                meta: { title: 'HELLOW2' }
             }
         ]
     }
-]
-
-export function syncRouter(syncRoute: SyncRoute[]): RouteObject[] {
-    const routes: RouteObject[] = []
-    syncRoute.forEach(route => {
-        routes.push({
-            path: route.path,
-            element: (
-                <Suspense fallback={<div>路由加载ing...</div>}>
-                    <route.element />
-                </Suspense>
-            ),
-            children: route.children && syncRouter(route.children)
-        })
-    })
-    return routes
-}
-
-///////////////////////////////////
-export const routes: RoutesItemType[] = [
-    {
-        path: '/',
-        redirect: '/index',
-        meta: { hidden: true }
-    },
-    {
-        path: '/index',
-        component: () => import('@/layout'),
-        meta: {
-            title: '首页'
-        },
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/home')
-            }
-        ] as RoutesItemType[]
-    }
-]
-
-/**
- * @description: 全局路由拦截
- * @param {string} pathname 当前路由路径
- * @param {object} meta 当前路由自定义meta字段
- * @return {string} 需要跳转到其他页时就return一个该页的path路径
- */
-export const onRouteBefore: OnRouteBeforeType = ({ pathname, meta }) => {
-    // const { userStore } = store
-    console.log(pathname)
-    // 动态修改页面title
-    if (meta.title !== undefined) {
-        document.title = meta.title
-    }
-
-    // 登录及权限判断
-    // if (!meta.noLogin) {
-    //     // 路由是否需要登录
-    //     if (userStore.isLogin) {
-    //         // 用户是否已登录
-    //         const { accessId } = meta
-    //         const message = `${pathname}，${meta.title || ''}`
-    //         const path403 = `/403?message=${encodeURIComponent(message)}`
-
-    //         if (!userStore.isGotUserInfo) {
-    //             // 是否已获取到用户（权限）信息
-    //             return new Promise(resolve => {
-    //                 api.getUserInfo().then((res: any) => {
-    //                     const data = res.data || {}
-    //                     userStore.setUserInfo(data)
-
-    //                     if (!getIsCanAccess(accessId)) {
-    //                         resolve(path403)
-    //                     }
-    //                 })
-    //             })
-    //         } else {
-    //             if (!getIsCanAccess(accessId)) {
-    //                 return path403
-    //             }
-    //         }
-    //     } else {
-    //         return `/login?redirectUrl=${encodeURIComponent(window.location.href)}`
-    //     }
-    // }
-}
+] as RouteItem[]

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { RouteObject } from 'react-router-dom'
 
 // 拓展信息
@@ -13,8 +14,10 @@ type ReactElementType = JSX.Element
 
 // 由于interface extends不能是联合类型，使用类型交叉为route类型扩展可选属性
 type RoutesItemType = RouteObject & {
+    path: string
+    icon?: ReactNode
     redirect?: string
-    component?: FunctionalImportType
+    component?: FunctionalImportType | ReactNode
     meta?: MetaType
     children?: RoutesItemType[]
 }

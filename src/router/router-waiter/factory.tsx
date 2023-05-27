@@ -6,36 +6,26 @@ import { Navigate, RouteObject } from 'react-router-dom'
 import { RouterWaiterPropsType, MetaType, FunctionalImportType } from '@/types/router'
 import RouteInterceptor from './interceptor'
 
-export default class RouteFactory {
-    routes
-    onRouteBefore
-    loading
+export default function ReactFactory(option: RouterWaiterPropsType) {
+    const { routes = [], onRouteBefore, loading = <div></div> } = option
 
-    constructor(option: RouterWaiterPropsType) {
-        this.routes = option.routes || []
-        this.onRouteBefore = option.onRouteBefore
-        this.loading = option.loading || <div></div>
-    }
-
-    transformRoutes(routeList = this.routes) {
+    const transformRoutes = (routeList = routes) => {
         const list: RouteObject[] = []
         routeList.forEach(route => {
-            const obj = { ...route }
-            if (obj.path === undefined) {
+            const routeTemp: RouteObject = {}
+            if (route.path === undefined) {
                 return
             }
-            if (obj.redirect) {
-                obj.element = <Navigate to={obj.redirect} replace={true} />
-            } else if (obj.component) {
-                obj.element = this.lazyLoad(obj.component, obj.meta || {})
+            routeTemp.path = route.path
+            if (route.redirect) {
+                routeTemp.element = <Navigate to={route.redirect} replace={true} />
+            } else if (route.component) {
+                routeTemp.element = typeof route.component === 'function' ? lazyLoad(route.component, route.meta || {}) : route.component
             }
-            delete obj.redirect
-            delete obj.component
-            delete obj.meta
-            if (obj.children) {
-                obj.children = this.transformRoutes(obj.children)
+            if (route.children) {
+                routeTemp.children = transformRoutes(route.children)
             }
-            list.push(obj)
+            list.push(routeTemp)
         })
         return list
     }
@@ -43,13 +33,16 @@ export default class RouteFactory {
     /**
      * @description: 路由懒加载
      */
-    lazyLoad(importFn: FunctionalImportType, meta: MetaType) {
+    const lazyLoad = (importFn: FunctionalImportType, meta: MetaType) => {
         const Element = lazy(importFn)
         const lazyElement = (
-            <Suspense fallback={this.loading}>
+            <Suspense fallback={loading}>
                 <Element _meta={meta} />
             </Suspense>
         )
-        return <RouteInterceptor element={lazyElement} meta={meta} onRouteBefore={this.onRouteBefore} />
+        return <RouteInterceptor element={lazyElement} meta={meta} onRouteBefore={onRouteBefore} />
+    }
+    return {
+        transformRoutes
     }
 }

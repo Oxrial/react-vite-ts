@@ -11,6 +11,8 @@ declare global {
   const Layout: typeof import('antd/es')['Layout']
   const Menu: typeof import('antd/es')['Menu']
   const PieChartOutlined: typeof import('@ant-design/icons')['PieChartOutlined']
+  const Skeleton: typeof import('antd/es')['Skeleton']
+  const Spin: typeof import('antd/es')['Spin']
   const TeamOutlined: typeof import('@ant-design/icons')['TeamOutlined']
   const UploadOutlined: typeof import('@ant-design/icons')['UploadOutlined']
   const UserOutlined: typeof import('@ant-design/icons')['UserOutlined']

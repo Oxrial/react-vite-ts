@@ -15,7 +15,7 @@
 // }
 import { RouterWaiterPropsType } from '@/types/router'
 import { useRoutes } from 'react-router-dom'
-import useRouteFactory from './factory2'
+import useRouteFactory from './factory'
 
 export default function RouterWaiter({ routes, onRouteBefore, loading }: RouterWaiterPropsType) {
     const { transformRoutes } = useRouteFactory({

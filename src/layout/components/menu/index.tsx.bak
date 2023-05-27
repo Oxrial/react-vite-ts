@@ -1,0 +1,31 @@
+import { ReactNode, Key } from 'react'
+import type { MenuProps } from 'antd'
+import { routes } from '@/router'
+import { RoutesItemType } from '@/types/router'
+import { ItemType } from 'antd/es/breadcrumb/Breadcrumb'
+import { useNavigate } from 'react-router-dom'
+type MenuItem = Required<MenuProps>['items'][number]
+
+export default function MenuIndex() {
+    const navigate = useNavigate()
+    const getItem = (key: Key, label: ReactNode, icon?: ReactNode, children?: MenuItem[], type?: 'group'): MenuItem =>
+        ({ key, label, icon, children, type } as MenuItem)
+    const genderMenu = (routes: RoutesItemType[], parentPath = '') => {
+        const items: MenuItem[] = []
+        routes
+            .filter(route => !route.meta?.hidden)
+            .forEach((route: RoutesItemType) => {
+                const children = (route.children?.length && genderMenu(route.children, route.path)) || undefined
+                items.push(
+                    children?.length === 1
+                        ? children[0]
+                        : getItem(!parentPath ? route.path : parentPath + '/' + route.path, route.meta?.title, route.icon, children)
+                )
+            })
+        return items
+    }
+    const items = genderMenu(routes) as ItemType[]
+    const menuHandle = ({ key }: { key: string }) => navigate(key)
+
+    return <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} items={items as MenuItem[]} onClick={menuHandle} />
+}
