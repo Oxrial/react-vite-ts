@@ -2,7 +2,7 @@ import { ReactNode, Key } from 'react'
 import type { MenuProps } from 'antd'
 import { routesObject } from '@/router'
 import { matchRoutes, useLocation, useNavigate } from 'react-router-dom'
-import { RouteItem } from '@/types/routes'
+import { RouteItem } from '@/types/router'
 type MenuItem = Required<MenuProps>['items'][number]
 
 export default function MenuIndex() {
@@ -28,16 +28,18 @@ export default function MenuIndex() {
             .filter(route => !route.meta?.hidden)
             .forEach((route: RouteItem) => {
                 const children = (route.children?.length && genderMenu(route.children, route.path)) || undefined
-                items.push(
-                    children?.length === 1
-                        ? children[0]
-                        : getItem(
-                              (parentPath + (parentPath && parentPath !== '/' ? route.path && '/' : '') + route.path) as string,
-                              route.meta?.title,
-                              route.icon,
-                              children
-                          )
-                )
+                let temp: MenuItem = null
+                if (children?.length === 1) {
+                    temp = children[0]
+                } else {
+                    temp = getItem(
+                        (parentPath + (parentPath && parentPath !== '/' ? route.path && '/' : '') + route.path) as string,
+                        route.meta?.title,
+                        route.icon,
+                        children
+                    )
+                }
+                items.push(temp)
             })
         return items
     }

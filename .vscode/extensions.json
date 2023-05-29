@@ -2,23 +2,22 @@
     "recommendations": [
         "sldobri.darcula-5-stars",
         "kamikillerto.vscode-colorize",
-        // "xr0master.webstorm-intellij-darcula-theme",
-        // "mgmcdermott.vscode-language-babel",
         "aaron-bond.better-comments",
         "casperstorm.directory-files",
         "mikestead.dotenv",
-        "EditorConfig.EditorConfig",
+        "editorconfig.editorconfig",
         "usernamehw.errorlens",
-        "VisualStudioExptTeam.vscodeintellicode",
-        "xabikos.JavaScriptSnippets",
+        "visualstudioexptteam.vscodeintellicode",
+        "xabikos.javascriptsnippets",
         "isudox.vscode-jetbrains-keybindings",
-        "PKief.material-icon-theme",
+        "pkief.material-icon-theme",
         "christian-kohler.npm-intellisense",
         "cipchk.cssrem",
-        "Tyriar.sort-lines",
-        "MisterJ.vue-volar-extention-pack",
+        "tyriar.sort-lines",
+        "misterj.vue-volar-extention-pack",
         "infeng.vscode-react-typescript",
         "dsznajder.es7-react-js-snippets",
-        "planbcoding.vscode-react-refactor"
+        "planbcoding.vscode-react-refactor",
+        "oderwat.indent-rainbow"
     ]
 }

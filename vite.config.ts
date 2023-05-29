@@ -18,7 +18,7 @@ export default defineConfig({
             imports: ['react'],
             dts: './src/types/auto-imports.d.ts',
             resolvers: [
-                // 使用我自己编写的解析器，处理antd的组件
+                // \处理antd的组件
                 AntDesignResolver({
                     resolveIcons: true
                 })

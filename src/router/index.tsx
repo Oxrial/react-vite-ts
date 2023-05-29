@@ -2,7 +2,8 @@ import { lazy, Suspense, ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import AppLayout from '@/layout'
-import { RouteItem } from '@/types/routes'
+import { RouteItem } from '@/types/router'
+import Login from '@/views/login'
 
 // eslint-disable-next-line react-refresh/only-export-components
 const Home = lazy(() => import('@/views/home'))
@@ -10,6 +11,7 @@ const Home = lazy(() => import('@/views/home'))
 const Hellow1 = lazy(() => import('@/views/hellow'))
 // eslint-disable-next-line react-refresh/only-export-components
 const Hellow2 = lazy(() => import('@/views/hellow2'))
+// import Guards from './guards'
 const lazyLoad = (element: ReactNode): ReactNode => {
     return <Suspense fallback={<Spin />}>{element}</Suspense>
 }
@@ -46,5 +48,10 @@ export const routesObject = [
                 meta: { title: 'HELLOW2' }
             }
         ]
+    },
+    {
+        path: '/login',
+        element: <Login />,
+        meta: { title: '登录', hidden: true }
     }
 ] as RouteItem[]
