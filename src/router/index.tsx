@@ -15,6 +15,7 @@ const Hellow2 = lazy(() => import('@/views/hellow2'))
 const lazyLoad = (element: ReactNode): ReactNode => {
     return <Suspense fallback={<Spin />}>{element}</Suspense>
 }
+
 export const routesObject = [
     {
         path: '/',

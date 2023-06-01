@@ -23,6 +23,15 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/plugins/sm4.js",
+        "src/plugins/sm4.js",
+        "src/utils/type-print/typetor.mjs",
+        "src/utils/type-print/typetor.mjs",
+        "src/components/CommForm/test.ts"
+    ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

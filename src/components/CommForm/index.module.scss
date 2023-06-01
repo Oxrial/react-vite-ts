@@ -1,0 +1,22 @@
+.comm-form {
+    &.dialog {
+        width: 80%;
+        margin: 0 auto;
+        :global {
+            .ant-form-item {
+                width: calc(50% - 20px);
+                margin-bottom: 25px;
+                .operation {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    &.search {
+        :global {
+            .ant-form-item {
+                margin-bottom: 25px;
+            }
+        }
+    }
+}
