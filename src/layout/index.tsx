@@ -12,20 +12,17 @@ const LayoutIndex = () => {
     const headerHeight = 64
     return (
         <Layout style={{ height: '100vh' }}>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider width={250} trigger={null} collapsible collapsed={collapsed}>
                 <div
                     style={{
                         height: headerHeight,
-                        backgroundColor: 'pink',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#fff',
-                        fontSize: 24,
-                        fontWeight: 'bold'
+                        overflow: 'hidden'
                     }}
                 >
-                    LOGO
+                    <img src="/src/assets/logo.jpg" style={{ width: '100%' }} />
                 </div>
                 <MenuIndex />
             </Sider>

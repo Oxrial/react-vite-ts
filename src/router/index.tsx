@@ -1,17 +1,12 @@
-import { lazy, Suspense, ReactNode } from 'react'
+import { Suspense, ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import AppLayout from '@/layout'
 import { RouteItem } from '@/types/router'
 import Login from '@/views/login'
 
-// eslint-disable-next-line react-refresh/only-export-components
-const Home = lazy(() => import('@/views/home'))
-// eslint-disable-next-line react-refresh/only-export-components
-const Hellow1 = lazy(() => import('@/views/hellow'))
-// eslint-disable-next-line react-refresh/only-export-components
-const Hellow2 = lazy(() => import('@/views/hellow2'))
-// import Guards from './guards'
+import { Home, Hellow1, Hellow2, GoldenModalDemo, CanvasControl } from './views'
+
 const lazyLoad = (element: ReactNode): ReactNode => {
     return <Suspense fallback={<Spin />}>{element}</Suspense>
 }
@@ -47,6 +42,34 @@ export const routesObject = [
                 path: 'hellow2',
                 element: lazyLoad(<Hellow2 />),
                 meta: { title: 'HELLOW2' }
+            }
+        ]
+    },
+    {
+        path: '/modal',
+        element: <AppLayout />,
+        meta: { title: 'Modal' },
+        children: [
+            {
+                path: 'goldren',
+                element: lazyLoad(<GoldenModalDemo />),
+                meta: { title: 'GoldrenModal' }
+            },
+            {
+                path: 'comm',
+                element: lazyLoad(<Hellow2 />),
+                meta: { title: 'HELLOW2' }
+            }
+        ]
+    },
+    {
+        path: '/canvas-control',
+        element: <AppLayout />,
+        children: [
+            {
+                path: '',
+                element: lazyLoad(<CanvasControl />),
+                meta: { title: 'CanvasControl' }
             }
         ]
     },
