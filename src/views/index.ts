@@ -1,0 +1,5 @@
+export const Home = lazy(() => import('./home'))
+export const Hellow1 = lazy(() => import('./hellow'))
+export const Hellow2 = lazy(() => import('./hellow2'))
+export const CanvasControl = lazy(() => import('./canvas-control'))
+export const GoldenModalDemo = lazy(() => import('@/components/GoldenModal/demo'))

@@ -39,7 +39,7 @@ const LayoutIndex = () => {
                         }}
                     />
                 </Header>
-                <Content>
+                <Content style={{ maxHeight: 'calc(100vh - 60px)', overflow: 'auto' }}>
                     <Outlet />
                 </Content>
             </Layout>

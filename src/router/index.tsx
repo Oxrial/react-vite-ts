@@ -5,7 +5,7 @@ import AppLayout from '@/layout'
 import { RouteItem } from '@/types/router'
 import Login from '@/views/login'
 
-import { Home, Hellow1, Hellow2, GoldenModalDemo, CanvasControl } from './views'
+import { Home, Hellow1, Hellow2, GoldenModalDemo, CanvasControl } from '@/views'
 
 const lazyLoad = (element: ReactNode): ReactNode => {
     return <Suspense fallback={<Spin />}>{element}</Suspense>
@@ -14,13 +14,13 @@ const lazyLoad = (element: ReactNode): ReactNode => {
 export const routesObject = [
     {
         path: '/',
+        element: <Navigate to="/home" />,
+        meta: { hidden: true }
+    },
+    {
+        path: '/',
         element: <AppLayout />,
         children: [
-            {
-                path: '',
-                element: <Navigate to="/home" />,
-                meta: { hidden: true }
-            },
             {
                 path: 'home',
                 element: lazyLoad(<Home />),
