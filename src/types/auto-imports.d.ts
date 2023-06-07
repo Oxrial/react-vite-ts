@@ -10,6 +10,7 @@ declare global {
   const DesktopOutlined: typeof import('@ant-design/icons')['DesktopOutlined']
   const FileOutlined: typeof import('@ant-design/icons')['FileOutlined']
   const Form: typeof import('antd/es')['Form']
+  const Image: typeof import('antd/es')['Image']
   const Layout: typeof import('antd/es')['Layout']
   const Menu: typeof import('antd/es')['Menu']
   const Modal: typeof import('antd/es')['Modal']

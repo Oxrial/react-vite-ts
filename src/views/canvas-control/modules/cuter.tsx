@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react'
 import createCanvas from '../hooks/creatCanvas'
+// import html2canvas from 'html2canvas'
 
 export default function Cuter() {
     const style = { margin: '10px 0', padding: 10, border: '1px solid gray' }
@@ -30,12 +31,16 @@ export default function Cuter() {
         })
         document.getElementById('main-box-cut')?.appendChild(canvDom)
     }
+    const cut2Image = () => {
+        // html2canvas(document.getElementById('main-box-cut')!).then(canvas => {})
+    }
     return (
         <Card style={{ margin: 10 }} title="裁切">
             <div id="main-box-cut" style={style}>
                 <input type="file" onChange={fileChange} />
                 {syncImageSrc && <img style={{ width: 500 }} ref={syncImageRef} src={syncImageSrc} onLoad={imageLoad} />}
             </div>
+            <Button onClick={cut2Image}>Canvas</Button>
         </Card>
     )
 }

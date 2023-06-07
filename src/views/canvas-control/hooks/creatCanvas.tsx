@@ -15,7 +15,9 @@
  * @returns
  */
 export default function createCanvas(options: {
-    dom: HTMLImageElement
+    domw?: number
+    domh?: number
+    dom?: HTMLImageElement
     w?: number
     h?: number
     sx?: number
@@ -26,17 +28,17 @@ export default function createCanvas(options: {
     csy?: number
     cdw?: number
     cdh?: number
+    draw?: boolean
 }) {
-    const { dom } = options
-    const width = dom.width
-    const height = dom.height
-    const { w = width, h = height, sx = 0, sy = 0, dw = width, dh = height, csx = 0, csy = 0, cdw = width, cdh = height } = options
+    const { dom = null, domw = dom?.width, domh = dom?.height } = options
+    const width = domw
+    const height = domh
+    const { w = width, h = height, sx = 0, sy = 0, dw = width, dh = height, csx = 0, csy = 0, cdw = width, cdh = height, draw = true } = options
     const canvDom = document.createElement('canvas')
-    canvDom.width = w
-    canvDom.height = h
+    canvDom.width = w!
+    canvDom.height = h!
 
-    const canvDomCtx = canvDom.getContext('2d')
-    console.table({ dom, sx, sy, dw, dh, csx, csy, cdw, cdh })
-    canvDomCtx?.drawImage(dom, sx, sy, dw, dh, csx, csy, cdw, cdh)
-    return { dom: canvDom, ctx: canvDomCtx }
+    const canvCtx = canvDom.getContext('2d')
+    draw && dom && canvCtx?.drawImage(dom, sx, sy, dw!, dh!, csx, csy, cdw!, cdh!)
+    return { dom: canvDom, ctx: canvCtx }
 }
