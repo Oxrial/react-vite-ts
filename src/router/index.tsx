@@ -1,4 +1,3 @@
-import { Suspense, ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import AppLayout from '@/layout'
@@ -6,10 +5,7 @@ import { RouteItem } from '@/types/router'
 import Login from '@/views/login'
 
 import { Home, Hellow1, Hellow2, GoldenModalDemo, CanvasControl } from '@/views'
-
-const lazyLoad = (element: ReactNode): ReactNode => {
-    return <Suspense fallback={<Spin />}>{element}</Suspense>
-}
+import { lazyLoad } from '@/utils/common'
 
 export const routesObject = [
     {

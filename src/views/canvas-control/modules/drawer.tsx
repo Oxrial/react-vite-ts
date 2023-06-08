@@ -46,7 +46,7 @@ export default function Drawer() {
         box.appendChild(canvDom)
     }
     const arc = () => {
-        const { dom: canvDom, ctx: canvCtx } = createCanvas({ draw: false, domw: 100, domh: 100 })
+        const { dom: canvDom, ctx: canvCtx } = createCanvas({ draw: false, domw: 200, domh: 100 })
         if (!canvCtx) return
         /**
          * arc的startAngle,endAngle接受为弧度值
@@ -55,9 +55,59 @@ export default function Drawer() {
          *   则1弧度为1/π/180 = 180/π，绘制1弧度也就是57...°默认顺时针绘制
          *   若绘制1弧度输入1即可，可得到角度180/π的角度（57...°）的弧线
          */
+        canvCtx.beginPath()
         canvCtx.arc(0, 0, 100, 0, 1)
         canvCtx.stroke()
+
+        // 椭圆
+        canvCtx.beginPath()
+        canvCtx.ellipse(150, 50, 25, 50, 10, 0, 30 * Math.PI)
+        canvCtx.stroke()
+
         const box = document.getElementById('arc-box')
+        if (!box) return
+        box.innerHTML = ''
+        box.appendChild(canvDom)
+    }
+    const smileArc = () => {
+        const { dom: canvDom, ctx: canvCtx } = createCanvas({ draw: false, domw: 200, domh: 200 })
+        if (!canvCtx) return
+        canvCtx.beginPath()
+        canvCtx.arc(100, 100, 100, 0, 2 * Math.PI)
+        canvCtx.stroke()
+
+        canvCtx.beginPath()
+        canvCtx.arc(50, 60, 30, 0, 2 * Math.PI)
+        canvCtx.stroke()
+        canvCtx.beginPath()
+        canvCtx.arc(60, 60, 10, 0, 2 * Math.PI)
+        canvCtx.fillStyle = 'pink'
+        canvCtx.fill()
+        canvCtx.stroke()
+
+        canvCtx.beginPath()
+        canvCtx.arc(150, 60, 30, 0, 2 * Math.PI)
+        canvCtx.stroke()
+        canvCtx.beginPath()
+        canvCtx.moveTo(160, 40)
+        canvCtx.lineTo(135, 60)
+        canvCtx.stroke()
+        canvCtx.beginPath()
+        canvCtx.moveTo(135, 60)
+        canvCtx.lineTo(160, 80)
+        canvCtx.stroke()
+
+        canvCtx.beginPath()
+        canvCtx.arc(100, 100, 5, 0, 2 * Math.PI)
+        canvCtx.fillStyle = 'pink'
+        canvCtx.fill()
+        canvCtx.stroke()
+
+        canvCtx.beginPath()
+        canvCtx.ellipse(100, 130, 40, 20, 0, 0, 150 * (Math.PI / 180))
+        // canvCtx.arc(100, 100, 60, (30 * Math.PI) / 180, (150 * Math.PI) / 180)
+        canvCtx.stroke()
+        const box = document.getElementById('smile-arc-box')
         if (!box) return
         box.innerHTML = ''
         box.appendChild(canvDom)
@@ -65,6 +115,7 @@ export default function Drawer() {
     useEffect(() => {
         polylineGradient()
         arc()
+        smileArc()
     }, [])
     return (
         <>
@@ -76,13 +127,16 @@ export default function Drawer() {
             <Card style={{ margin: 10 }} title="折线渐变">
                 <div id="polyline-gradient-box" style={{ display: 'inline-block' }}></div>
             </Card>
-            <Card style={{ margin: 10 }} title="弧">
-                半径为1的半圆周长/弧长为π，【弧度(rad)是弧长/半径】，此时弧度为π/1 <br />
-                半圆为180度，则1角度为π/180（0.0174...）弧度
+            <Card style={{ margin: 10 }} title="弧、圆、椭圆">
+                半径为1的半圆周长/弧长为：π，【弧度(rad) 是弧长与半径的比(弧长/半径)】，此时弧度为：π/1 <br />
+                半圆为180度，则1角度等于π/180 = 0.0174...弧度。由此可得n角度的弧度为n*π/180
                 <br />
                 则1弧度为 1/π/180 = 57...°
                 <div id="arc-box" style={{ display: 'inline-block' }}></div> <br />
                 其他：1弧度 = 180/π度 = 180/π*60分 = 180/π*60*60 ≈ 206265秒
+            </Card>
+            <Card style={{ margin: 10 }} title="笑脸">
+                <div id="smile-arc-box" style={{ display: 'inline-block' }}></div>
             </Card>
         </>
     )

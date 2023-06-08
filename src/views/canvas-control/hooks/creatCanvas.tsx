@@ -40,5 +40,6 @@ export default function createCanvas(options: {
 
     const canvCtx = canvDom.getContext('2d')
     draw && dom && canvCtx?.drawImage(dom, sx, sy, dw!, dh!, csx, csy, cdw!, cdh!)
-    return { dom: canvDom, ctx: canvCtx }
+    if (!canvDom || !canvCtx) new Error('dom is not defined')
+    return { dom: canvDom!, ctx: canvCtx! }
 }
