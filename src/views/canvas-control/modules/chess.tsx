@@ -3,10 +3,20 @@ import css from './chess.module.scss'
 
 const step = 40
 const size = 800
+const arrs: Array<Array<any>> = []
 const { dom: canvDom, ctx: canvCtx } = createCanvas({ draw: false, domw: size, domh: size })
 export default function Chess() {
+    const sum = (a: number, b: number) => {
+        let count = arrs[a][b]
+        let up = 1
+        let down = 1
+        for (let i = step; i < size; i += step) {
+            if (arrs[a][b - 1]) {
+                count += arrs[a][b - 1]
+            }
+        }
+    }
     const drawBoard = () => {
-        const arrs: Array<Array<any>> = []
         for (let i = step; i < size; i += step) {
             arrs.push([])
             canvCtx.beginPath()
