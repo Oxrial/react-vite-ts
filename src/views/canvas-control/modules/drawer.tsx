@@ -128,12 +128,14 @@ export default function Drawer() {
                 <div id="polyline-gradient-box" style={{ display: 'inline-block' }}></div>
             </Card>
             <Card style={{ margin: 10 }} title="弧、圆、椭圆">
-                半径为1的半圆周长/弧长为：π，【弧度(rad) 是弧长与半径的比(弧长/半径)】，此时弧度为：π/1 <br />
-                半圆为180度，则1角度等于π/180 = 0.0174...弧度。由此可得n角度的弧度为n*π/180
+                弧度(rad): 即弧长与半径的比(弧长/半径) <br />
+                半径为1的半圆周长/弧长为: π，此时弧度为: π/1 (rad)
+                <br />
+                半圆为180°，则1角度等于π/180 = 0.0174...(rad)。由此可得n角度的弧度为: n*π/180 (rad)
                 <br />
                 则1弧度为 1/π/180 = 57...°
                 <div id="arc-box" style={{ display: 'inline-block' }}></div> <br />
-                其他：1弧度 = 180/π度 = 180/π*60分 = 180/π*60*60 ≈ 206265秒
+                其他：1(rad) = 180/π°= 180/π*60(分) = 180/π*60*60 ≈ 206265(秒)
             </Card>
             <Card style={{ margin: 10 }} title="笑脸">
                 <div id="smile-arc-box" style={{ display: 'inline-block' }}></div>
