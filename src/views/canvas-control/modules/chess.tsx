@@ -2,7 +2,6 @@ import { throttle } from 'lodash-es'
 import createCanvas from '../hooks/creatCanvas'
 import css from './chess.module.scss'
 
-// const history: ImageData[] = []
 export default function Chess() {
     const step = 40
     const size = 800
@@ -11,18 +10,17 @@ export default function Chess() {
     const length = (size - 2 * step) / step
     const moveTemp: string[] = []
     let isWhite = true
-    const [historyIndex, setHistoryIndex] = useState<number>(1)
-    const [history, setHistory] = useState<ImageData[]>([])
+    const history: ImageData[] = []
+    let historyIndex = -1
+    const [nextBtn, setNextBtn] = useState<boolean>(false)
+
     const save = () => {
-        setHistoryIndex(prev => prev++)
-        const im = [...history, canvCtx.getImageData(0, 0, size, size)]
-        setHistory(im)
-        console.log(history, im)
+        historyIndex++
+        history[historyIndex] = canvCtx.getImageData(0, 0, size, size)
     }
     const go = (backNum = -1) => {
-        console.log(history, historyIndex)
         if (historyIndex > 0) {
-            setHistoryIndex(prev => prev + backNum)
+            historyIndex += backNum
             canvCtx.putImageData(history[historyIndex], 0, 0)
         }
     }
@@ -179,12 +177,13 @@ export default function Chess() {
     }
     useEffect(() => {
         drawBoard()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
     return (
         <Card style={{ margin: 10 }} title="棋">
+            {historyIndex}
             <Button onClick={() => go()}>上一步</Button>
-            <Button disabled={historyIndex === history.length - 1} onClick={() => go(1)}>
+            <Button disabled={nextBtn} onClick={() => go(1)}>
                 下一步
             </Button>
             <div id="chess-box" className={css['chess-main']}></div>
