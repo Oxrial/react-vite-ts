@@ -1,28 +1,42 @@
-import { throttle } from 'lodash-es'
+import { cloneDeep, throttle } from 'lodash-es'
 import createCanvas from '../hooks/creatCanvas'
 import css from './chess.module.scss'
 
+const step = 40
+const size = 800
+let historyIndex = -1
+const { dom: canvDom, ctx: canvCtx } = createCanvas({ draw: false, domw: size, domh: size })
+const arrs: Array<Array<any>> = []
+const length = (size - 2 * step) / step
+const moveTemp: string[] = []
+// let isWhite = true
+interface History {
+    isWhite: boolean
+    imageData: ImageData
+}
+const history: History[] = []
 export default function Chess() {
-    const step = 40
-    const size = 800
-    const { dom: canvDom, ctx: canvCtx } = createCanvas({ draw: false, domw: size, domh: size })
-    const arrs: Array<Array<any>> = []
-    const length = (size - 2 * step) / step
-    const moveTemp: string[] = []
-    let isWhite = true
-    const history: ImageData[] = []
-    let historyIndex = -1
-    const [nextBtn, setNextBtn] = useState<boolean>(false)
+    const [isWhite, setIsWhite] = useState<boolean>(true)
+    const [prevBtnDisabled, setPrevBtnDisabled] = useState<boolean>(false)
+    const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(false)
 
-    const save = () => {
-        historyIndex++
-        history[historyIndex] = canvCtx.getImageData(0, 0, size, size)
-    }
-    const go = (backNum = -1) => {
-        if (historyIndex > 0) {
-            historyIndex += backNum
-            canvCtx.putImageData(history[historyIndex], 0, 0)
+    const save = (first = false) => {
+        if (first) {
+            historyIndex = -1
+            history.splice(0, history.length)
         }
+        historyIndex++
+        history.splice(historyIndex, history.length, { imageData: canvCtx.getImageData(0, 0, size, size), isWhite: cloneDeep(!isWhite) })
+        console.log(history, historyIndex, !isWhite)
+        setPrevBtnDisabled(historyIndex === 0)
+        setNextBtnDisabled(historyIndex === history.length - 1)
+    }
+    const go = (backNum = 0) => {
+        historyIndex += backNum
+        canvCtx.putImageData(history[historyIndex].imageData, 0, 0)
+        setIsWhite(history[historyIndex].isWhite)
+        setPrevBtnDisabled(historyIndex === 1)
+        setNextBtnDisabled(historyIndex === history.length - 1)
     }
     const surroundCount = (a: number, b: number, up: number, down: number) => {
         let count = arrs[a][b]
@@ -76,7 +90,7 @@ export default function Chess() {
     }
     const clickHandle = (e: MouseEvent) => {
         // 移除
-        go(0)
+        go()
         moveTemp.splice(0, moveTemp.length)
 
         const { offsetX, offsetY } = e
@@ -112,7 +126,6 @@ export default function Chess() {
         canvCtx.strokeStyle = 'transparent'
         canvCtx.stroke()
         canvCtx.closePath()
-        isWhite = !isWhite
         if (sum(px - 1, py - 1)) {
             canvDom.removeEventListener('click', clickHandle)
             Modal.success({
@@ -121,6 +134,7 @@ export default function Chess() {
         }
         canvCtx.restore()
         save()
+        setIsWhite(!isWhite)
     }
     const moveHandle = (e: MouseEvent) => {
         const { offsetX, offsetY } = e
@@ -134,7 +148,7 @@ export default function Chess() {
         if (moveTemp.includes(x + '-' + y)) return
         // 移除
         if (moveTemp.length > 0) {
-            go(0)
+            go()
             moveTemp.splice(0, moveTemp.length)
         }
         canvCtx.setLineDash([10, 4])
@@ -165,7 +179,7 @@ export default function Chess() {
             canvCtx.stroke()
             canvCtx.closePath()
         }
-        save()
+        save(true)
         canvCtx.save()
         canvDom.addEventListener('click', clickHandle)
         canvDom.addEventListener('mousemove', throttle(moveHandle, 200))
@@ -181,9 +195,10 @@ export default function Chess() {
     }, [])
     return (
         <Card style={{ margin: 10 }} title="棋">
-            {historyIndex}
-            <Button onClick={() => go()}>上一步</Button>
-            <Button disabled={nextBtn} onClick={() => go(1)}>
+            <Button disabled={prevBtnDisabled} onClick={() => go(-1)}>
+                上一步
+            </Button>
+            <Button disabled={nextBtnDisabled} onClick={() => go(1)}>
                 下一步
             </Button>
             <div id="chess-box" className={css['chess-main']}></div>
