@@ -1,5 +1,10 @@
 import { getToken } from '@/utils/auth'
 import { create } from 'zustand'
+/**
+ * produce 内部暂时存储着我们的目标对象（以 state 为例）
+ * 暴露一个 draft（草稿）, 在 draft 上作修改
+ * 接收修改后的draft，immer 基于传入的 state 照着draft 的修改 返回一个新的 state
+ */
 import { produce } from 'immer'
 
 interface User {
@@ -21,7 +26,7 @@ const userOrigin: UserState = {
 }
 export const useUser = create<UserState & UserAction>(set => ({
     ...userOrigin,
-    setUserInfo: (user: UserState['userInfo']) => set(produce(state => (state.userInfo = user))),
+    setUserInfo: (user: UserState['userInfo']) => set(produce(draftState => (draftState.userInfo = user))),
     login: (user: UserState['userInfo']) => {
         return user
     },

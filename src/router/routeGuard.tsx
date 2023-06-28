@@ -23,8 +23,7 @@ export default function RouteGuard({ children }: any) {
                 }
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname])
+    }, [location.pathname, location, navigate])
 
     return children
 }
