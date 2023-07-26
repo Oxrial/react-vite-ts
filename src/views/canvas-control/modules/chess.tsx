@@ -26,15 +26,14 @@ export default function Chess() {
             history.splice(0, history.length)
         }
         historyIndex++
-        history.splice(historyIndex, history.length, { imageData: canvCtx.getImageData(0, 0, size, size), isWhite: cloneDeep(!isWhite) })
-        console.log(history, historyIndex, !isWhite)
+        history.splice(historyIndex, history.length, { imageData: canvCtx.getImageData(0, 0, size, size), isWhite: cloneDeep(isWhite) })
         setPrevBtnDisabled(historyIndex === 0)
         setNextBtnDisabled(historyIndex === history.length - 1)
     }
-    const go = (backNum = 0) => {
+    const go = (typer = '', backNum = 0) => {
         historyIndex += backNum
         canvCtx.putImageData(history[historyIndex].imageData, 0, 0)
-        setIsWhite(history[historyIndex].isWhite)
+        typer !== 'click' && setIsWhite(history[historyIndex].isWhite)
         setPrevBtnDisabled(historyIndex === 1)
         setNextBtnDisabled(historyIndex === history.length - 1)
     }
@@ -90,7 +89,7 @@ export default function Chess() {
     }
     const clickHandle = (e: MouseEvent) => {
         // 移除
-        go()
+        go('click')
         moveTemp.splice(0, moveTemp.length)
 
         const { offsetX, offsetY } = e
@@ -195,10 +194,10 @@ export default function Chess() {
     }, [])
     return (
         <Card style={{ margin: 10 }} title="棋">
-            <Button disabled={prevBtnDisabled} onClick={() => go(-1)}>
+            <Button disabled={prevBtnDisabled} onClick={() => go('', -1)}>
                 上一步
             </Button>
-            <Button disabled={nextBtnDisabled} onClick={() => go(1)}>
+            <Button disabled={nextBtnDisabled} onClick={() => go('', 1)}>
                 下一步
             </Button>
             <div id="chess-box" className={css['chess-main']}></div>

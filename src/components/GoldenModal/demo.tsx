@@ -1,20 +1,21 @@
 import CommForm, { FormItemType, OperationItem } from '@/components/CommForm'
 import Item from '@/components/CommForm/FormItem'
 import NiceModal, { useModal } from '@ebay/nice-modal-react'
-import GlodModal from '@/components/GoldenModal'
+import GlodenModal from '@/components/GoldenModal'
+const GlodenModalz = NiceModal.create(GlodenModal)
 import { cloneDeep } from 'lodash-es'
 
 export default function DemoIndex() {
-    const [form4] = Form.useForm()
+    const [formA] = Form.useForm()
 
     // 指向的GlodModal一致，实例一致，嵌套弹窗不可用，可作弹窗内容替换
-    const mo4 = useModal(GlodModal)
-    const GlodModal2 = cloneDeep(GlodModal)
-    const mo4_1 = useModal(GlodModal2)
+    const modalA = useModal(GlodenModalz)
+    const GlodModal2 = cloneDeep(GlodenModalz)
+    const modalRA = useModal(GlodModal2)
 
     // 通过id注册，符合多弹窗嵌套
-    const [form5] = Form.useForm()
-    const [form5_1] = Form.useForm()
+    const [formB] = Form.useForm()
+    const [formRB] = Form.useForm()
 
     const items = [
         {
@@ -54,25 +55,25 @@ export default function DemoIndex() {
         }
     ] as Array<FormItemType>
 
-    const handler5: OperationItem[] = [
+    const handlerB: OperationItem[] = [
         {
-            onClick: () => console.log(form5.getFieldsValue()),
+            onClick: () => console.log(formB.getFieldsValue()),
             htmlType: 'submit',
             label: '提交'
         },
         {
             onClick: () => {
                 const props = {
-                    title: 'TTT6',
+                    title: 'RB',
                     width: '50%',
                     onCancel: () => {
-                        NiceModal.hide('5_1_1')
-                        console.log(form5_1.getFieldsValue())
+                        NiceModal.hide('RB_MODAL')
+                        console.log(formRB.getFieldsValue())
                     }
                 }
-                NiceModal.show('5_1_1', props)
+                NiceModal.show('RB_MODAL', props)
             },
-            label: '嵌套弹窗'
+            label: '嵌套弹窗RB'
         }
     ]
 
@@ -82,67 +83,65 @@ export default function DemoIndex() {
             <NiceModal.Provider>
                 <Button
                     onClick={() => {
-                        const handler4: OperationItem[] = [
+                        const handlerA: OperationItem[] = [
                             {
-                                onClick: () => console.log(form4.getFieldsValue()),
+                                onClick: () => console.log(formA.getFieldsValue()),
                                 htmlType: 'submit',
                                 label: '提交'
                             },
                             {
                                 onClick: () => {
-                                    mo4_1.show({
-                                        title: 'TTT4_1',
+                                    modalRA.show({
+                                        title: 'RA',
                                         width: '40%',
-                                        // Component: <CommForm items={items} form={form4_1} dialog={true} />,
                                         Component: <span>内容替换</span>,
                                         onCancel: () => {
-                                            mo4_1.hide()
-                                            // console.log(form4_1.getFieldsValue())
+                                            modalRA.hide()
                                         }
                                     })
                                 },
-                                label: '内容替换'
+                                label: '内容替换为RA'
                             }
                         ]
-                        mo4.show({
-                            title: 'TTT4',
+                        modalA.show({
+                            title: 'A',
                             width: '50%',
-                            Component: <CommForm items={items} form={form4} handler={handler4} dialog={true} />,
+                            Component: <CommForm items={items} form={formA} handler={handlerA} dialog={true} />,
                             onCancel: () => {
-                                mo4.hide()
-                                console.log(form4.getFieldsValue())
+                                modalA.hide()
+                                console.log(formA.getFieldsValue())
                             }
                         })
                     }}
                 >
-                    显示全局弹窗4
+                    显示全局弹窗A
                 </Button>
 
                 {/* 通过id唤起嵌套弹窗 */}
-                <GlodModal id="5_1" Component={<CommForm items={items} form={form5} handler={handler5} dialog={true} />} />
-                <GlodModal
-                    id="5_1_1"
+                <GlodenModalz id="B_MODAL" Component={<CommForm items={items} form={formB} handler={handlerB} dialog={true} />} />
+                <GlodenModalz
+                    id="RB_MODAL"
                     title="TTT5_1"
                     width="40%"
                     onCancel={() => {
                         NiceModal.hide('5_1_1')
-                        console.log(form5_1.getFieldsValue())
+                        console.log(formRB.getFieldsValue())
                     }}
-                    Component={<CommForm items={items} form={form5_1} dialog={true} />}
+                    Component={<CommForm items={items} form={formRB} dialog={true} />}
                 />
                 <Button
                     onClick={() => {
-                        NiceModal.show('5_1', {
-                            title: 'TTT5',
+                        NiceModal.show('B_MODAL', {
+                            title: 'B',
                             width: '50%',
                             onCancel: () => {
-                                NiceModal.hide('5_1')
-                                console.log(form5.getFieldsValue())
+                                NiceModal.hide('B_MODAL')
+                                console.log(formB.getFieldsValue())
                             }
                         })
                     }}
                 >
-                    显示全局弹窗5
+                    显示全局弹窗B
                 </Button>
             </NiceModal.Provider>
         </Card>
